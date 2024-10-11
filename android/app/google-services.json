@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "535696404678",
+    "project_id": "t-allam",
+    "storage_bucket": "t-allam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535696404678:android:98ded023b58bc772b267c7",
+        "android_client_info": {
+          "package_name": "t.allam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHW_fb_rk1oWjT74iWNFshprqwKXQiO0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
