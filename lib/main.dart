@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  
   runApp(MyApp());
 }
 
@@ -20,9 +21,11 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => AuthProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'T_Allam',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          
         ),
         initialRoute: AppRoutes.authWrapper,
         routes: {
