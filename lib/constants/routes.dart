@@ -1,6 +1,7 @@
 class AppRoutes {
-  static const String authWrapper = '/';
-  static const String login = '/login';
-  static const String signup = '/signup';
-  static const String home = '/home';
+  static const splash = '/';
+  static const authWrapper = '/auth-wrapper';
+  static const login = '/login';
+  static const signup = '/signup';
+  static const home = '/home';
 }

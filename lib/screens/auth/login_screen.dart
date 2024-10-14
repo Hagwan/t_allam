@@ -17,11 +17,12 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 80),
+              const SizedBox(height: 80),
               Center(
-                child: Image.asset("lib/assets/images/logo.png", height: 150), // Replace with your logo
+                child: Image.asset("lib/assets/images/logo.png",
+                    height: 200), // Replace with your logo
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -31,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -40,49 +41,57 @@ class LoginScreen extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  suffixIcon: Icon(Icons.visibility),
+                  suffixIcon: const Icon(Icons.visibility),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () async {
                   String email = _emailController.text.trim();
                   String password = _passwordController.text.trim();
-                  await Provider.of<AuthProvider>(context, listen: false).login(email, password);
+                  await Provider.of<AuthProvider>(context, listen: false)
+                      .login(email, password);
                 },
-                child: Text('تسجيل الدخول'),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: const Color.fromARGB(255, 255, 255, 255), // Purple color
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  backgroundColor: const Color(0xFF761FB0), // Purple color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                child: const Text('تسجيل الدخول',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton.icon(
                 onPressed: () {
                   // Add Google login logic here
                 },
-                icon: Icon(Icons.g_translate),
-                label: Text('تسجيل الدخول باستخدام جوجل'),
+                icon: const Icon(Icons.g_mobiledata),
+                label: const Text('تسجيل الدخول باستخدام جوجل'),
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.grey,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('ليس لديك حساب؟', style: TextStyle(color: Colors.black)),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(AppRoutes.signup);
                     },
-                    child: Text('سجل الآن', style: TextStyle(color: Colors.blue)),
+                    child: const Text('سجل الآن',
+                        style: TextStyle(color: Colors.blue)),
                   ),
+                  const Text('ليس لديك حساب؟',
+                      style: TextStyle(color: Colors.black)),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),
