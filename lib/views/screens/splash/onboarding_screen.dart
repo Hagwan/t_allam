@@ -1,8 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import '../../constants/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:t_allam/controllers/services/auth_wrapper.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
+  @override
+  _OnboardingScreenState createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  // Save onboarding status in SharedPreferences
+  Future<void> _setOnboardingSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('hasSeenOnboarding', true);
+  }
+
+  // Handle when onboarding is completed
+  Future<void> _onDone() async {
+    await _setOnboardingSeen();  // Mark onboarding as seen
+    if (!mounted) return;  // Ensure widget is still mounted
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const AuthWrapper()),
+    );
+  }
+
+  // Handle when onboarding is skipped
+  Future<void> _onSkip() async {
+    await _setOnboardingSeen();  // Mark onboarding as seen
+    if (!mounted) return;  // Ensure widget is still mounted
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const AuthWrapper()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
@@ -23,12 +53,8 @@ class OnboardingScreen extends StatelessWidget {
           image: Center(child: Image.asset('lib/assets/images/logo.png', height: 175.0)),
         ),
       ],
-      onDone: () {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.authWrapper);  // Navigate to AuthWrapper after onboarding
-      },
-      onSkip: () {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.authWrapper);  // Skip onboarding
-      },
+      onDone: _onDone,  // Call the async done handler
+      onSkip: _onSkip,  // Call the async skip handler
       showSkipButton: true,
       skip: const Text("Skip"),
       next: const Icon(Icons.arrow_forward),
