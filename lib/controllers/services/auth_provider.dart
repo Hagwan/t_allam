@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:t_allam/controllers/services/auth_service.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -16,11 +16,11 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    await _authService.signInWithEmailAndPassword(email, password);
+    await _authService.login(email, password);
   }
 
   Future<void> signUp(String email, String password) async {
-    await _authService.signUpWithEmailAndPassword(email, password);
+    await _authService.signUp(email, password);
   }
 
   Future<void> signOut() async {
