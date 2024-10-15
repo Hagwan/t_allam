@@ -95,8 +95,6 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _login(BuildContext context) {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    Provider.of<AuthProvider>(context, listen: false).login(email, password);
+    Provider.of<AuthProvider>(context, listen: false).login(email: _emailController.text.trim(), password: _passwordController.text.trim());
   }
 }

@@ -124,10 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _submit() async {
     if (_formKey.currentState?.validate() ?? false) {
-      String email = _emailController.text.trim();
-      String password = _passwordController.text.trim();
-
-      await Provider.of<AuthProvider>(context, listen: false).signUp(email, password);
+      await Provider.of<AuthProvider>(context, listen: false).signUp(email: _emailController.text.trim(), password: _passwordController.text.trim());
       if (mounted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
       }

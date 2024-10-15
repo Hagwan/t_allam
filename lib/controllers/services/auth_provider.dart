@@ -15,11 +15,11 @@ class AuthProvider with ChangeNotifier {
     });
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login({required String email, required String password}) async {
     await _authService.login(email, password);
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp({required String email, required String password}) async {
     await _authService.signUp(email, password);
   }
 
