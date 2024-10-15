@@ -11,7 +11,7 @@ class FirebaseFirestoreService {
       data['uid'] = _firestore.collection(collection).doc().id;
       await _firestore.collection(collection).doc(data['uid']).set(data);
       return true;
-    } catch (e) {
+    } catch (_) {
       return false;
     }
   }
@@ -21,7 +21,7 @@ class FirebaseFirestoreService {
     try {
       await _firestore.collection(collection).doc(data['uid']).update(data);
       return true;
-    } catch (e) {
+    } catch (_) {
       return false;
     }
   }
@@ -31,7 +31,7 @@ class FirebaseFirestoreService {
     try {
       await _firestore.collection(collection).doc(uid).delete();
       return true;
-    } catch (e) {
+    } catch (_) {
       return false;
     }
   }
@@ -41,7 +41,7 @@ class FirebaseFirestoreService {
     try {
       final document = await _firestore.collection(collection).doc(uid).get();
       return document.data();
-    } catch (e) {
+    } catch (_) {
       return null;
     }
   }
@@ -52,7 +52,7 @@ class FirebaseFirestoreService {
       return _firestore.collection(collection).get().then((QuerySnapshot querySnapshot) {
         return querySnapshot.docs.map((DocumentSnapshot document) => document.data()).toList();
       });
-    } catch (e) {
+    } catch (_) {
       return null;
     }
   }
