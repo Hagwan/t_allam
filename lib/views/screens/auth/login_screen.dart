@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       backgroundColor: const Color(0xFF761FB0), // Purple color
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: const Text('تسجيل الدخول', style: TextStyle(fontSize: 16, color: Colors.white)),
@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
 
