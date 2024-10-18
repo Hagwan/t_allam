@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:t_allam/views/screens/chat/veg_model.dart';
 import 'package:t_allam/views/screens/chat/veg_screen.dart';
+import 'package:t_allam/views/screens/content/arabic_alphabet.dart';
 import '../../../controllers/services/auth_provider.dart';
 import '../auth/registration-name.dart';
 
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
             //button to navigate to the registration name screen
             ElevatedButton(
               onPressed: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => VegetableScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ArabicAlphabetIntroScreen()));
               },
               child: const Text('Go to Registration Name Screen'),
             ),

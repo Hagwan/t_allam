@@ -6,7 +6,7 @@ class RegistrationNameScreen extends StatefulWidget {
 }
 
 class _RegistrationNameScreenState extends State<RegistrationNameScreen> {
-  TextEditingController _ageController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
