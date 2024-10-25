@@ -6,7 +6,8 @@ import 'package:t_allam/views/screens/content/arabic_alphabet.dart';
 import '../../../controllers/services/auth_provider.dart';
 import '../auth/registration-name.dart';
 import '../content/speech_to_text.dart';
-
+import '../content/filtering.dart';
+import '../content/image.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             //button to navigate to the registration name screen
             ElevatedButton(
               onPressed: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SpeechToTextPage()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ImageGenerator()));
               },
               child: const Text('Go to Registration Name Screen'),
             ),
