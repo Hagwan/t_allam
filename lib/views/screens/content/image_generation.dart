@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../../../models/image_generator_model.dart'; // Import the model file
+import '../../../models/image_generator_model.dart';
 
 class ImageGenerator extends StatefulWidget {
   @override
@@ -21,13 +21,14 @@ class _ImageGeneratorState extends State<ImageGenerator> {
   Future<void> _generateImage(String prompt) async {
     setState(() {
       _status = 'Checking prompt for appropriateness...';
-      _imageUrl = null; // Reset the image
+      _imageUrl = null;
     });
 
     bool isSafe = await isPromptSafeForKids(prompt);
     if (!isSafe) {
       setState(() {
-        _status = 'This prompt is not appropriate for kids. Please try a different one!';
+        _status =
+            'This prompt is not appropriate for kids. Please try a different one!';
       });
       return;
     }
@@ -51,28 +52,83 @@ class _ImageGeneratorState extends State<ImageGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Generator'),
+        title: Text('Image Generation', style: TextStyle(color: Colors.black)),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Enter a prompt to generate an image:',
-                style: TextStyle(fontSize: 18),
+              // Display the character image at the top
+              Image.asset(
+                'lib/assets/images/Allam.png', // replace with the actual image asset path
+                height: 150,
+                
               ),
+              // Display the generated image or placeholder
+              Container(
+                height: 300,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: _imageUrl != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.memory(
+                          base64Decode(_imageUrl!.split(',')[1]),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.grey.shade400,
+                          size: 80,
+                        ),
+                      ),
+              ),
+
+              SizedBox(height: 20),
+
+              // Text field for prompt input
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(
                   hintText: 'Type your prompt here...',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 ),
               ),
-              SizedBox(height: 10),
-              ElevatedButton(
+
+              SizedBox(height: 20),
+
+              // Button to generate image
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                icon: Icon(Icons.send),
+                label: Text('Prompt'),
                 onPressed: () {
                   final prompt = _controller.text;
                   if (prompt.isNotEmpty) {
@@ -83,14 +139,15 @@ class _ImageGeneratorState extends State<ImageGenerator> {
                     });
                   }
                 },
-                child: Text('Generate Image'),
               ),
+
               SizedBox(height: 20),
-              if (_status.isNotEmpty) Text(_status),
-              if (_imageUrl != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Image.memory(base64Decode(_imageUrl!.split(',')[1])),
+
+              // Status message
+              if (_status.isNotEmpty)
+                Text(
+                  _status,
+                  style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
             ],
           ),

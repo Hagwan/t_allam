@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../screens/content/drawing.dart';
 
 class EditScreen extends StatelessWidget {
   const EditScreen({super.key});
@@ -34,7 +35,9 @@ class EditScreen extends StatelessWidget {
                     icon: Icons.draw_rounded,
                     label: 'اكتب الحروف ',
                     onTap: () {
-                      // Image Generation action
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => WebExample(),
+                      )); // Image Generation action
                     },
                   ),
                 ],

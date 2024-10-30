@@ -5,8 +5,7 @@
 // class ObjectDetectionScreen extends StatefulWidget {
 //   final List<CameraDescription> cameras;
 
-//   const ObjectDetectionScreen({Key? key, required this.cameras})
-//       : super(key: key);
+//   ObjectDetectionScreen({required this.cameras});
 
 //   @override
 //   _ObjectDetectionScreenState createState() => _ObjectDetectionScreenState();
@@ -54,27 +53,31 @@
 //           description.lensDirection == CameraLensDirection.front);
 //     }
 
-//     initializeCamera(newDescription);
+//     if (newDescription != null) {
+//       initializeCamera(newDescription);
+//     } else {
+//       print('Requested camera not available');
+//     }
 //   }
 
 //   void initializeCamera(CameraDescription? description) async {
-//     if (description == null) {
-//       _controller = CameraController(
-//         widget.cameras[0],
-//         ResolutionPreset.high,
-//         enableAudio: false,
+//     if (widget.cameras.isEmpty) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('No cameras found on this device.')),
 //       );
-//     } else {
-//       _controller = CameraController(
-//         description,
-//         ResolutionPreset.high,
-//         enableAudio: false,
-//       );
+//       return;
 //     }
+
+//     _controller = CameraController(
+//       description ?? widget.cameras[0],
+//       ResolutionPreset.high,
+//       enableAudio: false,
+//     );
 
 //     await _controller.initialize();
 
 //     if (!mounted) return;
+
 //     _controller.startImageStream((CameraImage image) {
 //       if (isModelLoaded && !isDetecting) {
 //         runModel(image);
@@ -87,6 +90,13 @@
 //     setState(() {
 //       isDetecting = true;
 //     });
+
+//     if (image.planes.isEmpty) {
+//       setState(() {
+//         isDetecting = false;
+//       });
+//       return;
+//     }
 
 //     var recognitions = await Tflite.detectObjectOnFrame(
 //       bytesList: image.planes.map((plane) => plane.bytes).toList(),
@@ -107,16 +117,28 @@
 
 //   @override
 //   Widget build(BuildContext context) {
+//     if (widget.cameras.isEmpty) {
+//       return Scaffold(
+//         appBar: AppBar(
+//           title: Text('Real-time Object Detection'),
+//         ),
+//         body: Center(child: Text('No cameras found on this device.')),
+//       );
+//     }
+
 //     if (!_controller.value.isInitialized) {
 //       return Container();
 //     }
+
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('كاشف الأجسام', textDirection: TextDirection.rtl),
+//         title: Text('Real-time Object Detection'),
 //       ),
 //       body: Column(
 //         children: [
-//           Expanded(
+//           Container(
+//             width: MediaQuery.of(context).size.width,
+//             height: MediaQuery.of(context).size.height * 0.8,
 //             child: Stack(
 //               children: [
 //                 Center(child: CameraPreview(_controller)),
@@ -125,18 +147,23 @@
 //                     recognitions: recognitions!,
 //                     previewH: imageHeight.toDouble(),
 //                     previewW: imageWidth.toDouble(),
-//                     screenH: MediaQuery.of(context).size.height,
+//                     screenH: MediaQuery.of(context).size.height * 0.8,
 //                     screenW: MediaQuery.of(context).size.width,
 //                   ),
 //               ],
 //             ),
 //           ),
-//           IconButton(
-//             onPressed: toggleCamera,
-//             icon: const Icon(
-//               Icons.camera_front,
-//               size: 30,
-//             ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               IconButton(
+//                 onPressed: toggleCamera,
+//                 icon: Icon(
+//                   Icons.camera_front,
+//                   size: 30,
+//                 ),
+//               ),
+//             ],
 //           ),
 //         ],
 //       ),
@@ -151,7 +178,7 @@
 //   final double screenH;
 //   final double screenW;
 
-//   const BoundingBoxes({
+//   BoundingBoxes({
 //     required this.recognitions,
 //     required this.previewH,
 //     required this.previewW,
@@ -167,28 +194,30 @@
 //         var y = rec["rect"]["y"] * screenH;
 //         double w = rec["rect"]["w"] * screenW;
 //         double h = rec["rect"]["h"] * screenH;
+
 //         return Positioned(
 //           left: x,
 //           top: y,
 //           width: w,
 //           height: h,
 //           child: Container(
-//               decoration: BoxDecoration(
-//                 border: Border.all(
-//                   color: Colors.purpleAccent,
-//                   width: 3,
-//                 ),
+//             decoration: BoxDecoration(
+//               border: Border.all(
+//                 color: Colors.purpleAccent,
+//                 width: 3,
 //               ),
-//               child: Text(
-//                 rec["confidenceInClass"] >= 0.5
-//                     ? "${rec["detectedClass"]} ${(rec["confidenceInClass"] * 100).toStringAsFixed(0)}%"
-//                     : "",
-//                 style: TextStyle(
-//                   color: Colors.white,
-//                   fontSize: 20,
-//                   background: Paint()..color = Colors.purple,
-//                 ),
-//               )),
+//             ),
+//             child: Text(
+//               rec["confidenceInClass"] >= 0.5
+//                   ? "${rec["detectedClass"]} ${(rec["confidenceInClass"] * 100).toStringAsFixed(0)}%"
+//                   : "",
+//               style: TextStyle(
+//                 color: Colors.white,
+//                 fontSize: 20,
+//                 background: Paint()..color = Colors.purple,
+//               ),
+//             ),
+//           ),
 //         );
 //       }).toList(),
 //     );

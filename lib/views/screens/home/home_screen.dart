@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'edit_screen.dart';
 import 'family_screen.dart';
 import 'search_screen.dart';
-import '../../../controllers/services/auth_provider.dart';
 import '../content/stt_screen.dart';
 
 
@@ -32,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(

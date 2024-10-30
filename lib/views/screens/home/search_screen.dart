@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/views/screens/content/image_generation.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -26,15 +27,15 @@ class SearchScreen extends StatelessWidget {
                   _buildFeatureButton(
                     icon: Icons.camera_alt_rounded,
                     label: 'كاشف الأجسام',
-                    onTap: () {
-                      // Object Detection action
-                    },
+                    onTap: () {},
                   ),
                   _buildFeatureButton(
                     icon: Icons.image_rounded,
                     label: 'إنشاء الصور',
                     onTap: () {
-                      // Image Generation action
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ImageGenerator(),
+                      ));
                     },
                   ),
                 ],
