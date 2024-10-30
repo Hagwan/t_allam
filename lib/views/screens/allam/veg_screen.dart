@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'veg_model.dart';
+import '../../../models/veg_model.dart';
 class VegetableScreen extends StatefulWidget {
   @override
   _VegetableScreenState createState() => _VegetableScreenState();

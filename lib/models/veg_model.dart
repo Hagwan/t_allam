@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class VegetableGenerator {
-  final String apiKey = 'kpCtfv0ECosknIUz1cUjXml3opp8ja68u5ow12QV84Wc';
+  final String apiKey = dotenv.env['API_KEY']!;
   final String tokenUrl = 'https://iam.cloud.ibm.com/identity/token';
   final String generateUrl = 'https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29';
 

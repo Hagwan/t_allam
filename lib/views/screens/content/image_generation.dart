@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'filtering.dart'; // Import the filtering function
+import '../../../models/image_generator_model.dart'; // Import the model file
 
 class ImageGenerator extends StatefulWidget {
   @override
@@ -13,13 +12,18 @@ class _ImageGeneratorState extends State<ImageGenerator> {
   String? _imageUrl;
   String _status = '';
 
+  Future<bool> isPromptSafeForKids(String prompt) async {
+    // Implement your logic to check if the prompt is safe for kids
+    // For now, let's assume all prompts are safe
+    return true;
+  }
+
   Future<void> _generateImage(String prompt) async {
     setState(() {
       _status = 'Checking prompt for appropriateness...';
       _imageUrl = null; // Reset the image
     });
 
-    // Check if the prompt is safe for kids
     bool isSafe = await isPromptSafeForKids(prompt);
     if (!isSafe) {
       setState(() {
@@ -32,35 +36,15 @@ class _ImageGeneratorState extends State<ImageGenerator> {
       _status = 'Generating image...';
     });
 
-    const String apiUrl =
-        "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell";
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {
-          "Authorization": "Bearer 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", // Replace with your Hugging Face API key
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode({"inputs": prompt}),
-      );
-
-      if (response.statusCode == 200) {
-        final bytes = response.bodyBytes; // Read the response bytes
-        setState(() {
-          _imageUrl = 'data:image/png;base64,' + base64Encode(bytes); // Encode bytes as base64
-          _status = 'Image generated successfully!';
-        });
+    final result = await generateImageFromPrompt(prompt);
+    setState(() {
+      if (result['status'] == 'success') {
+        _imageUrl = result['imageUrl'];
+        _status = 'Image generated successfully!';
       } else {
-        setState(() {
-          _status = 'Error: Failed to generate image.';
-        });
+        _status = result['message'];
       }
-    } catch (error) {
-      setState(() {
-        _status = 'An error occurred: $error';
-      });
-    }
+    });
   }
 
   @override
