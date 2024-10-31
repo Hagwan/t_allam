@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../screens/content/drawing.dart';
+import 'package:t_allam/views/screens/content/draw_objects.dart';
+import '../content/draw_alphabet.dart';
 
 class EditScreen extends StatelessWidget {
   const EditScreen({super.key});
@@ -28,7 +29,9 @@ class EditScreen extends StatelessWidget {
                     icon: Icons.data_object,
                     label: ' ارسم الاشياء',
                     onTap: () {
-                      // Object Detection action
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DrawObjects(),
+                      )); // I
                     },
                   ),
                   _buildFeatureButton(
@@ -36,7 +39,7 @@ class EditScreen extends StatelessWidget {
                     label: 'اكتب الحروف ',
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => WebExample(),
+                        builder: (context) => DrawAphabet(),
                       )); // Image Generation action
                     },
                   ),

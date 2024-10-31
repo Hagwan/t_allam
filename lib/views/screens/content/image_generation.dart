@@ -52,7 +52,7 @@ class _ImageGeneratorState extends State<ImageGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Generation', style: TextStyle(color: Colors.black)),
+        title: Text('انشاء الصور', style: TextStyle(color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -69,9 +69,8 @@ class _ImageGeneratorState extends State<ImageGenerator> {
             children: [
               // Display the character image at the top
               Image.asset(
-                'lib/assets/images/Allam.png', // replace with the actual image asset path
+                'lib/assets/images/Half_Allam.png', // replace with the actual image asset path
                 height: 150,
-                
               ),
               // Display the generated image or placeholder
               Container(
@@ -104,7 +103,8 @@ class _ImageGeneratorState extends State<ImageGenerator> {
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                  hintText: 'Type your prompt here...',
+                  hintTextDirection: TextDirection.rtl,
+                  hintText: ' اكتب النص هنا...',
                   filled: true,
                   fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
@@ -121,14 +121,17 @@ class _ImageGeneratorState extends State<ImageGenerator> {
               // Button to generate image
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
+                  
+                  backgroundColor: const Color.fromARGB(255, 39, 92, 176),
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
+                    
                   ),
                 ),
-                icon: Icon(Icons.send),
-                label: Text('Prompt'),
+                label: Text('ابدأ', style: TextStyle(color: Colors.white)),
+                icon: Icon(Icons.switch_access_shortcut_rounded,
+                    color: Colors.white),
                 onPressed: () {
                   final prompt = _controller.text;
                   if (prompt.isNotEmpty) {

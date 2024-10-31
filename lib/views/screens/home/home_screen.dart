@@ -3,7 +3,9 @@ import 'edit_screen.dart';
 import 'family_screen.dart';
 import 'search_screen.dart';
 import '../content/stt_screen.dart';
-
+import 'discoverers_screen.dart'; // Import the DiscoverersScreen
+import 'Explorers.dart';
+import 'Creators.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -68,19 +69,23 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.menu_book_rounded, color: Colors.grey, size: 30),
+              icon: const Icon(Icons.menu_book_rounded,
+                  color: Colors.grey, size: 30),
               onPressed: () => _onItemTapped(0),
             ),
             IconButton(
-              icon: const Icon(Icons.search_rounded, color: Colors.grey, size: 30),
+              icon: const Icon(Icons.search_rounded,
+                  color: Colors.grey, size: 30),
               onPressed: () => _onItemTapped(1),
             ),
             IconButton(
-              icon: const Icon(Icons.mode_edit_outlined, color: Colors.grey, size: 30),
+              icon: const Icon(Icons.mode_edit_outlined,
+                  color: Colors.grey, size: 30),
               onPressed: () => _onItemTapped(2),
             ),
             IconButton(
-              icon: const Icon(Icons.family_restroom_outlined, color: Colors.grey, size: 30),
+              icon: const Icon(Icons.family_restroom_outlined,
+                  color: Colors.grey, size: 30),
               onPressed: () => _onItemTapped(3),
             ),
           ],
@@ -100,6 +105,7 @@ class HomeContent extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
+                const SizedBox(height: 40),
                 _buildGroupCard(
                   context,
                   gradientColors: [
@@ -107,7 +113,11 @@ class HomeContent extends StatelessWidget {
                     Colors.orange.shade500,
                   ],
                   title: 'المجموعة 1: المكتشفون',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => DiscoverersScreen()),
+                  ),
                 ),
+                const SizedBox(height: 40),
                 _buildGroupCard(
                   context,
                   gradientColors: [
@@ -115,7 +125,11 @@ class HomeContent extends StatelessWidget {
                     Colors.blue.shade500,
                   ],
                   title: 'المجموعة 2: المستكشفون',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => ExplorersScreen()),
+                  ),
                 ),
+                const SizedBox(height: 40),
                 _buildGroupCard(
                   context,
                   gradientColors: [
@@ -123,6 +137,9 @@ class HomeContent extends StatelessWidget {
                     Colors.red.shade500,
                   ],
                   title: 'المجموعة 3: المبدعون',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => CreatorsScreen()),
+                  ),
                 ),
               ],
             ),
@@ -133,15 +150,13 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _buildGroupCard(BuildContext context,
-      {required List<Color> gradientColors, required String title}) {
+      {required List<Color> gradientColors,
+      required String title,
+      VoidCallback? onTap}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 45.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
       child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => SpeechToTextPage()),
-          );
-        },
+        onTap: onTap,
         child: Container(
           height: 100,
           decoration: BoxDecoration(

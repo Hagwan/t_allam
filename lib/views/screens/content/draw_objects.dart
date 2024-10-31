@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:image_painter/image_painter.dart';
 
-class WebExample extends StatefulWidget {
-  const WebExample({Key? key}) : super(key: key);
+class DrawObjects extends StatefulWidget {
+  const DrawObjects({Key? key}) : super(key: key);
 
   @override
-  State<WebExample> createState() => _WebExampleState();
+  State<DrawObjects> createState() => _DrawObjectsState();
 }
 
-class _WebExampleState extends State<WebExample> {
+class _DrawObjectsState extends State<DrawObjects> {
   final ImagePainterController _controller = ImagePainterController();
-    int _selectedIndex = 0;
-
-void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Page", style: TextStyle(color: Colors.black)),
+        title:
+            const Text("أرسم الأشكال ", style: TextStyle(color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -37,9 +31,9 @@ void _onItemTapped(int index) {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 30,
+                  radius: 50,
                   backgroundImage: AssetImage(
-                      'lib/assets/images/character.png'), // Replace with actual path
+                      'lib/assets/images/Allam_head.png'), // Replace with actual path
                 ),
                 SizedBox(width: 10),
                 Expanded(
@@ -62,40 +56,13 @@ void _onItemTapped(int index) {
           // Image Painter (Drawing functionality)
           Expanded(
             child: ImagePainter.asset(
-              "lib/assets/images/noon.png", // Replace with actual asset path
+              "lib/assets/images/Ula.png", // Replace with actual asset path
               controller: _controller,
               scalable: true,
               textDelegate: TextDelegate(),
             ),
           ),
         ],
-      ),
-
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade200,
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 6.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.menu_book_rounded, color: Colors.grey, size: 30),
-              onPressed: () => _onItemTapped(0),
-            ),
-            IconButton(
-              icon: const Icon(Icons.search_rounded, color: Colors.grey, size: 30),
-              onPressed: () => _onItemTapped(1),
-            ),
-            IconButton(
-              icon: const Icon(Icons.mode_edit_outlined, color: Colors.grey, size: 30),
-              onPressed: () => _onItemTapped(2),
-            ),
-            IconButton(
-              icon: const Icon(Icons.family_restroom_outlined, color: Colors.grey, size: 30),
-              onPressed: () => _onItemTapped(3),
-            ),
-          ],
-        ),
       ),
     );
   }
