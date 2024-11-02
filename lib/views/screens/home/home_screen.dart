@@ -1,40 +1,196 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../controllers/services/auth_provider.dart';
+import 'edit_screen.dart';
+import 'family_screen.dart';
+import 'search_screen.dart';
+import '../content/stt_screen.dart';
+import 'discoverers_screen.dart'; // Import the DiscoverersScreen
+import 'Explorers.dart';
+import 'Creators.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    HomeContent(), // Default Home screen content
+    const SearchScreen(),
+    const EditScreen(),
+    const FamilyScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        elevation: 0,
+        leading: const Icon(Icons.stars_outlined, color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await authProvider.signOut();
+            icon: const Icon(Icons.person_pin_rounded, color: Colors.white),
+            onPressed: () {
+              // Navigate to Profile Page or handle profile action
             },
           ),
         ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Welcome to the Home Screen!',
-              style: TextStyle(fontSize: 24),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: <Color>[
+                Color(0xFF8E24AA), // Purple color
+                Color(0xFFBA68C8), // Light purple color
+              ],
             ),
-            const SizedBox(height: 20),
-            Text(
-              'You are logged in as: ${authProvider.user?.email ?? 'Unknown'}',
-              style: const TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _screens,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.grey.shade200,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 6.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.menu_book_rounded,
+                  color: Colors.grey, size: 30),
+              onPressed: () => _onItemTapped(0),
+            ),
+            IconButton(
+              icon: const Icon(Icons.search_rounded,
+                  color: Colors.grey, size: 30),
+              onPressed: () => _onItemTapped(1),
+            ),
+            IconButton(
+              icon: const Icon(Icons.mode_edit_outlined,
+                  color: Colors.grey, size: 30),
+              onPressed: () => _onItemTapped(2),
+            ),
+            IconButton(
+              icon: const Icon(Icons.family_restroom_outlined,
+                  color: Colors.grey, size: 30),
+              onPressed: () => _onItemTapped(3),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                const SizedBox(height: 40),
+                _buildGroupCard(
+                  context,
+                  gradientColors: [
+                    Colors.orange.shade300,
+                    Colors.orange.shade500,
+                  ],
+                  title: 'المجموعة 1: المكتشفون',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => DiscoverersScreen()),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _buildGroupCard(
+                  context,
+                  gradientColors: [
+                    Colors.blue.shade300,
+                    Colors.blue.shade500,
+                  ],
+                  title: 'المجموعة 2: المستكشفون',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => ExplorersScreen()),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _buildGroupCard(
+                  context,
+                  gradientColors: [
+                    Colors.red.shade300,
+                    Colors.red.shade500,
+                  ],
+                  title: 'المجموعة 3: المبدعون',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => CreatorsScreen()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGroupCard(BuildContext context,
+      {required List<Color> gradientColors,
+      required String title,
+      VoidCallback? onTap}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 100,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, 10),
+              ),
+            ],
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(25.0),
+                child: Icon(Icons.menu_book_rounded,
+                    color: Colors.white, size: 30),
+              ),
+              Text(
+                title,
+                style: const TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );

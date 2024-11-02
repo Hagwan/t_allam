@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:t_allam/controllers/services/auth_provider.dart';
 import 'package:t_allam/views/screens/home/home_screen.dart';
-
+import 'package:t_allam/views/screens/auth/registration_screen.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -126,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       await Provider.of<AuthProvider>(context, listen: false).signUp(email: _emailController.text.trim(), password: _passwordController.text.trim());
       if (mounted) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) =>  RegistrationScreen()));
       }
     }
   }
