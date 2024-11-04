@@ -91,7 +91,7 @@ class ExplorersScreen extends StatelessWidget {
                     title: 'الحروف',
                     backgroundColor: Color(0xFF31AEFF),
                     imagePath:
-                        'lib/assets/images/aphapets.png', // Replace with the actual image path
+                        'lib/assets/images/family.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the letters page
                       Navigator.of(context).push(
@@ -107,7 +107,23 @@ class ExplorersScreen extends StatelessWidget {
                     title: 'التشكيل',
                     backgroundColor: Color(0xFF31AEFF),
                     imagePath:
-                        'lib/assets/images/tashkeel.png', // Replace with the actual image path
+                        'lib/assets/images/fruits.png', // Replace with the actual image path
+                    onTap: () {
+                      // Navigate to the formation page
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const FormationPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  _buildSectionCard(
+                    context,
+                    title: 'التشكيل',
+                    backgroundColor: Color(0xFF31AEFF),
+                    imagePath:
+                        'lib/assets/images/animals.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the formation page
                       Navigator.of(context).push(
