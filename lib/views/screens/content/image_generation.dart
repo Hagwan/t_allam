@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../../models/image_generator_model.dart';
+import 'package:http/http.dart' as http;
 
 class ImageGenerator extends StatefulWidget {
   @override
@@ -18,6 +19,30 @@ class _ImageGeneratorState extends State<ImageGenerator> {
     return true;
   }
 
+  Future<String> translateToEnglish(String arabicText) async {
+    // Use the Hugging Face translation API to translate Arabic to English
+    const apiUrl =
+        "https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-ar-en";
+    const apiKey =
+        "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"; // Replace with your actual API key
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        "Authorization": "Bearer $apiKey",
+        "Content-Type": "application/json",
+      },
+      body: json.encode({"inputs": arabicText}),
+    );
+
+    if (response.statusCode == 200) {
+      final result = json.decode(response.body);
+      return result[0]['translation_text'];
+    } else {
+      throw Exception("Failed to translate text");
+    }
+  }
+
   Future<void> _generateImage(String prompt) async {
     setState(() {
       _status = 'Checking prompt for appropriateness...';
@@ -28,36 +53,50 @@ class _ImageGeneratorState extends State<ImageGenerator> {
     if (!isSafe) {
       setState(() {
         _status =
-            'This prompt is not appropriate for kids. Please try a different one!';
+            'هذا النص غير مناسب لك. الرجاء تجربة نص آخر!';
       });
       return;
     }
 
     setState(() {
-      _status = 'Generating image...';
+      _status = 'Translating prompt...';
     });
 
-    final result = await generateImageFromPrompt(prompt);
-    setState(() {
-      if (result['status'] == 'success') {
-        _imageUrl = result['imageUrl'];
-        _status = 'Image generated successfully!';
-      } else {
-        _status = result['message'];
-      }
-    });
+    try {
+      // Translate the prompt from Arabic to English
+      String translatedPrompt = await translateToEnglish(prompt);
+
+      setState(() {
+        _status = 'Generating image...';
+      });
+
+      // Call image generation API with the translated prompt
+      final result = await generateImageFromPrompt(translatedPrompt);
+      setState(() {
+        if (result['status'] == 'success') {
+          _imageUrl = result['imageUrl'];
+          _status = 'Image generated successfully!';
+        } else {
+          _status = result['message'];
+        }
+      });
+    } catch (e) {
+      setState(() {
+        _status = 'Error in translation or image generation: $e';
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('انشاء الصور', style: TextStyle(color: Colors.black)),
+        title: const Text('انشاء الصور', style: TextStyle(color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -97,10 +136,11 @@ class _ImageGeneratorState extends State<ImageGenerator> {
                       ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Text field for prompt input
               TextField(
+                textDirection: TextDirection.rtl,
                 controller: _controller,
                 decoration: InputDecoration(
                   hintTextDirection: TextDirection.rtl,
@@ -112,25 +152,25 @@ class _ImageGeneratorState extends State<ImageGenerator> {
                     borderSide: BorderSide.none,
                   ),
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Button to generate image
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  
                   backgroundColor: const Color.fromARGB(255, 39, 92, 176),
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    
                   ),
                 ),
-                label: Text('ابدأ', style: TextStyle(color: Colors.white)),
-                icon: Icon(Icons.switch_access_shortcut_rounded,
+                label:
+                    const Text('ابدأ', style: TextStyle(color: Colors.white)),
+                icon: const Icon(Icons.switch_access_shortcut_rounded,
                     color: Colors.white),
                 onPressed: () {
                   final prompt = _controller.text;
@@ -144,13 +184,13 @@ class _ImageGeneratorState extends State<ImageGenerator> {
                 },
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Status message
               if (_status.isNotEmpty)
                 Text(
                   _status,
-                  style: TextStyle(fontSize: 16, color: Colors.black),
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
                 ),
             ],
           ),

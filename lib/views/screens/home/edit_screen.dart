@@ -11,12 +11,12 @@ class EditScreen extends StatelessWidget {
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 30),
             // Character Image
             Image.asset(
               'lib/assets/images/Allam.png', // replace with the actual image asset path
-              height: 250,
+              width: 130,
             ),
             const SizedBox(height: 40),
             // Object Detection and Image Generation Buttons
@@ -30,7 +30,7 @@ class EditScreen extends StatelessWidget {
                     label: ' ارسم الاشياء',
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DrawObjects(),
+                        builder: (context) => const DrawObject(),
                       )); // I
                     },
                   ),
@@ -39,7 +39,7 @@ class EditScreen extends StatelessWidget {
                     label: 'اكتب الحروف ',
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DrawAphabet(),
+                        builder: (context) => const DrawAlphabet(),
                       )); // Image Generation action
                     },
                   ),
@@ -48,8 +48,8 @@ class EditScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             // Chat with LughatiGPT Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32.0),
             ),
           ],
         ),
@@ -68,13 +68,20 @@ class EditScreen extends StatelessWidget {
         width: 150,
         height: 150,
         decoration: BoxDecoration(
-          color: Colors.purple.shade200,
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFFBE9AFF), // Purple color
+              Color(0xFF8C68CD), // Light purple color
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white, size: 40),
+            Icon(icon, color: Colors.white, size: 100),
             const SizedBox(height: 10),
             Text(
               label,

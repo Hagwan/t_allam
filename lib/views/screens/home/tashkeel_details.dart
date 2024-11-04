@@ -3,27 +3,29 @@ import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:t_allam/models/speech_model.dart'; // Import the ArabicAlphabetModel class
 
-class LetterDetailScreen extends StatefulWidget {
+class tashkeelDetailScreen extends StatefulWidget {
   final String groupName;
   final List<String> letters;
 
-  const LetterDetailScreen({
+  const tashkeelDetailScreen({
     Key? key,
     required this.groupName,
     required this.letters,
   }) : super(key: key);
 
   @override
-  _LetterDetailScreenState createState() => _LetterDetailScreenState();
+  _tashkeelDetailScreenState createState() => _tashkeelDetailScreenState();
 }
 
-class _LetterDetailScreenState extends State<LetterDetailScreen> {
+class _tashkeelDetailScreenState extends State<tashkeelDetailScreen> {
   final ArabicAlphabetModel _speechModel = ArabicAlphabetModel();
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   // Map of letter display to pronunciation for the Speech API
-  final Map<String, String> _pronunciationMap = {
-    'أ': 'ألف',
+  final Map<String, String> _pronunciationMap2 = {
+    'أُ': 'أو',
+    'أ': 'أا',
+    'إ': 'إيي',
     'ب': 'باء',
     'ت': 'تاء',
     'ث': 'ثاء',
@@ -55,7 +57,7 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
   Future<void> _playLetterSound(String letter) async {
     // Convert the letter to its pronunciation for the API
-    final pronunciation = _pronunciationMap[letter] ?? letter;
+    final pronunciation = _pronunciationMap2[letter] ?? letter;
 
     final Uint8List? audioData =
         await _speechModel.speakText(pronunciation) as Uint8List?;

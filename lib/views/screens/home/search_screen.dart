@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/views/screens/content/image_generation.dart';
+import 'package:t_allam/views/screens/content/chatbot.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -10,12 +11,13 @@ class SearchScreen extends StatelessWidget {
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 30),
+
             // Character Image
             Image.asset(
               'lib/assets/images/Allam.png', // replace with the actual image asset path
-              height: 250,
+              width: 130,
             ),
             const SizedBox(height: 40),
             // Object Detection and Image Generation Buttons
@@ -27,11 +29,20 @@ class SearchScreen extends StatelessWidget {
                   _buildFeatureButton(
                     icon: Icons.camera_alt_rounded,
                     label: 'كاشف الأجسام',
+                    gradientColors: [
+                      const Color(0xFFBE9AFF), // Purple color
+                      const Color(0xFF8C68CD),
+                    ],
                     onTap: () {},
                   ),
+                  const SizedBox(width: 20),
                   _buildFeatureButton(
-                    icon: Icons.image_rounded,
+                    icon: Icons.add_photo_alternate_rounded,
                     label: 'إنشاء الصور',
+                    gradientColors: [
+                      const Color(0xFFBE9AFF), // Purple color
+                      const Color(0xFF8C68CD),
+                    ],
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ImageGenerator(),
@@ -45,27 +56,39 @@ class SearchScreen extends StatelessWidget {
             // Chat with LughatiGPT Button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple.shade300,
-                  shape: RoundedRectangleBorder(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChatScreen(),
+                  ));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFFBE9AFF), // Purple color
+                        Color(0xFF8C68CD),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  minimumSize: const Size(double.infinity, 60),
-                ),
-                onPressed: () {
-                  // Chat action
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'تحدث مع لغتي جي بي تي',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 60,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'تحدث مع لغتي جي بي تي',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(Icons.chat, color: Colors.white),
+                      ],
                     ),
-                    SizedBox(width: 10),
-                    Icon(Icons.chat, color: Colors.white),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -78,6 +101,7 @@ class SearchScreen extends StatelessWidget {
   Widget _buildFeatureButton({
     required IconData icon,
     required String label,
+    required List<Color> gradientColors,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
@@ -86,17 +110,24 @@ class SearchScreen extends StatelessWidget {
         width: 150,
         height: 150,
         decoration: BoxDecoration(
-          color: Colors.purple.shade200,
+          gradient: LinearGradient(
+            colors: gradientColors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white, size: 40),
+            Icon(icon, color: Colors.white, size: 100),
             const SizedBox(height: 10),
             Text(
               label,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900),
             ),
           ],
         ),

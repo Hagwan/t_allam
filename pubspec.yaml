@@ -53,6 +53,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   image_painter: ^0.7.1
   cloud_firestore: ^5.4.4
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +81,7 @@ flutter:
   assets:
     - lib/assets/images/
     - lib/assets/tf/
-
+    - lib/assets/icons/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

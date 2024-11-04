@@ -1,214 +1,295 @@
 import 'package:flutter/material.dart';
-import 'parent_dashboard_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:t_allam/views/screens/auth/login_screen.dart';
 
 class FamilyScreen extends StatefulWidget {
   const FamilyScreen({super.key});
 
   @override
-  _FamilyScreenState createState() => _FamilyScreenState();
+  State<FamilyScreen> createState() => _FamilyScreenState();
 }
 
 class _FamilyScreenState extends State<FamilyScreen> {
-  bool isParentalEnabled = false;
+  List<Color> colors = const [Color(0xFFBE9AFF), Color(0xFF8C68CD)];
+  bool isToggled = false;
 
-  void _toggleParentalControl(bool value) {
-    setState(() {
-      isParentalEnabled = value;
-    });
-
-    if (value) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ParentDashboardScreen(),
-        ),
-      ).then((_) {
-        // Reset the switch back after returning from ParentDashboardScreen
-        setState(() {
-          isParentalEnabled = false;
-        });
-      });
-    }
+  void _logOut() async {
+    await FirebaseAuth.instance.signOut();
+    //take him to the login page
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // Top section with profile picture, name, and parental control toggle
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Colors.purple.shade300,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(width: 50), // Placeholder for symmetry
-                    const Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: AssetImage(
-                              'lib/assets/images/Allam_head.png'), // Replace with actual asset path
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Allam',
-                          style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Switch(
-                          value: isParentalEnabled,
-                          onChanged: _toggleParentalControl,
-                          activeColor: Colors.white,
-                        ),
-                        const Text(
-                          'Parental',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Progress statistics
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Progress',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade700),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildStatBox('Rewards', '10', Icons.star, Colors.purple),
-                    _buildStatBox('Streak', '3 Days',
-                        Icons.local_fire_department, Colors.purple.shade300),
-                    _buildStatBox(
-                        'Lesson', '1', Icons.school, Colors.purple.shade300),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                // Progress Bars
-                _buildProgressSection(
-                    'Discoverers', Colors.orange.shade300, 0.8),
-                const SizedBox(height: 20),
-                _buildProgressSection('Explorers', Colors.blue.shade300, 0.8),
-                const SizedBox(height: 20),
-                _buildProgressSection('Creators', Colors.red.shade300, 0.8),
-              ],
-            ),
-          ),
-        ],
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _header(),
+            _progress(),
+            _bars(),
+          ],
+        ),
       ),
-
-      // Bottom Navigation Bar
     );
   }
 
-  // Widget for statistics box (rewards, streak, lesson)
-  Widget _buildStatBox(String title, String value, IconData icon, Color color) {
+  Widget _header() {
     return Container(
-      width: 100,
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          colors: colors,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
       ),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Icon(icon, color: Colors.white, size: 24),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-                fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                onPressed: _logOut,
+                tooltip: 'Log out',
+              ),
+              Column(
+                children: [
+                  Switch(
+                    value: isToggled,
+                    onChanged: (value) {
+                      setState(() {
+                        isToggled = value;
+                      });
+                    },
+                    activeColor: Colors.white,
+                    inactiveThumbColor: const Color(0xFF8C68CD),
+                  ),
+                  Text(
+                    isToggled ? "Parental On" : "Parental Off",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.white),
+          const CircleAvatar(radius: 50),
+          const SizedBox(height: 8),
+          const Text(
+            'Allam',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
     );
   }
 
-  // Widget for each progress section (Discoverers, Explorers, Creators)
-  Widget _buildProgressSection(String title, Color color, double progress) {
+  Widget _rewards() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      height: MediaQuery.of(context).size.height * 0.20,
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          colors: colors,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: const Column(
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text('Rewards',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+            ),
           ),
-          Row(
-            children: [
-              Container(
-                width: 150,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 150 * progress,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(4),
+          Text('10',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 70,
+                  fontWeight: FontWeight.bold)),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.star, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _tasks({required String task, required int points, String? des}) {
+    return Container(
+      height: (MediaQuery.of(context).size.height * 0.19) / 2,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: colors,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(task,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+            Column(
+              children: [
+                Text('$points',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold)),
+                if (des != null)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(des,
+                          style: const TextStyle(color: Colors.white)),
                     ),
                   ),
-                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _progress() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text('Progress', style: TextStyle(color: Colors.grey)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: _rewards(),
               ),
               const SizedBox(width: 8),
-              Text(
-                '${(progress * 100).toInt()}%',
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
+              Expanded(
+                child: Column(
+                  children: [
+                    _tasks(task: 'Streak', points: 5, des: 'Days'),
+                    const SizedBox(height: 8),
+                    _tasks(task: 'Lesson', points: 10, des: null),
+                  ],
+                ),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget _bars() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          _progressBar('Discoverers', 80, Colors.yellow),
+          const SizedBox(height: 8),
+          _progressBar('Explorers', 60, Colors.blue),
+          const SizedBox(height: 8),
+          _progressBar('Creators', 40, Colors.red),
+        ],
+      ),
+    );
+  }
+
+  Widget _progressBar(String title, int progress, Color color) {
+    return _gradientContainer(
+      colors: [color, color.withOpacity(0.5)],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(title,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: FractionallySizedBox(
+                    widthFactor: progress / 100,
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text('$progress%',
+                  style: const TextStyle(color: Colors.white, fontSize: 16)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _gradientContainer({required Widget child, List<Color>? colors}) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: colors ?? this.colors,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: child,
     );
   }
 }

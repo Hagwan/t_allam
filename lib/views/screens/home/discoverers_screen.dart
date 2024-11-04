@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'letters_screen.dart';
+import 'tashkeel.dart';
+
 class DiscoverersScreen extends StatelessWidget {
   const DiscoverersScreen({super.key});
 
@@ -112,7 +114,7 @@ class DiscoverersScreen extends StatelessWidget {
                       // Navigate to the formation page
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const FormationPage(),
+                          builder: (_) => const TashkeelPage(),
                         ),
                       );
                     },
@@ -169,26 +171,6 @@ class DiscoverersScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Placeholder page for LettersPage
-
-
-// Placeholder page for FormationPage
-class FormationPage extends StatelessWidget {
-  const FormationPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Formation'),
-      ),
-      body: const Center(
-        child: Text('Content for Formation Page'),
       ),
     );
   }

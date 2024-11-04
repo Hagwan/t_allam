@@ -6,6 +6,7 @@ import '../content/stt_screen.dart';
 import 'discoverers_screen.dart'; // Import the DiscoverersScreen
 import 'Explorers.dart';
 import 'Creators.dart';
+import 'package:t_allam/models/icons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,23 +36,38 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: const Icon(Icons.stars_outlined, color: Colors.white),
+        leading: const Padding(
+          padding: EdgeInsets.only(
+              left: 8.0), // Add padding to move the icon to the right
+          child: MyIcon(
+            name: "allam_icon",
+            size: 10,
+            gradientColors: [
+              Color(0xFF898A8D),
+              Color(0xFFBEBEBE),
+            ],
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person_pin_rounded, color: Colors.white),
             onPressed: () {
               // Navigate to Profile Page or handle profile action
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const FamilyScreen()),
+              );
+              // take the user to the profile page
             },
           ),
         ],
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: <Color>[
-                Color(0xFF8E24AA), // Purple color
-                Color(0xFFBA68C8), // Light purple color
+                Color(0xFFBE9AFF), // Purple color
+                Color(0xFF8C68CD), // Light purple color
               ],
             ),
           ),
@@ -69,23 +85,51 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.menu_book_rounded,
-                  color: Colors.grey, size: 30),
+              icon: MyIcon(
+                name: 'book',
+                size: 30,
+                gradientColors: const [
+                  Color(0xFF898A8D),
+                  Color(0xFFBEBEBE),
+                ],
+                selected: _selectedIndex == 0,
+              ),
               onPressed: () => _onItemTapped(0),
             ),
             IconButton(
-              icon: const Icon(Icons.search_rounded,
-                  color: Colors.grey, size: 30),
+              icon: MyIcon(
+                name: 'travel',
+                size: 30,
+                gradientColors: const [
+                  Color(0xFF898A8D),
+                  Color(0xFFBEBEBE),
+                ],
+                selected: _selectedIndex == 1,
+              ),
               onPressed: () => _onItemTapped(1),
             ),
             IconButton(
-              icon: const Icon(Icons.mode_edit_outlined,
-                  color: Colors.grey, size: 30),
+              icon: MyIcon(
+                name: 'draw',
+                size: 30,
+                gradientColors: const [
+                  Color(0xFF898A8D),
+                  Color(0xFFBEBEBE),
+                ],
+                selected: _selectedIndex == 2,
+              ),
               onPressed: () => _onItemTapped(2),
             ),
             IconButton(
-              icon: const Icon(Icons.family_restroom_outlined,
-                  color: Colors.grey, size: 30),
+              icon: MyIcon(
+                name: 'pprofile',
+                size: 30,
+                gradientColors: const [
+                  Color(0xFF898A8D),
+                  Color(0xFFBEBEBE),
+                ],
+                selected: _selectedIndex == 3,
+              ),
               onPressed: () => _onItemTapped(3),
             ),
           ],
@@ -105,40 +149,41 @@ class HomeContent extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 60),
                 _buildGroupCard(
                   context,
                   gradientColors: [
-                    Colors.orange.shade300,
-                    Colors.orange.shade500,
+                    const Color(0xFFFFDA7E),
+                    const Color(0xFFFFCC4D),
                   ],
-                  title: 'المجموعة 1: المكتشفون',
+                  title: ' المكتشفون',
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => DiscoverersScreen()),
+                    MaterialPageRoute(
+                        builder: (_) => const DiscoverersScreen()),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 60),
                 _buildGroupCard(
                   context,
                   gradientColors: [
                     Colors.blue.shade300,
                     Colors.blue.shade500,
                   ],
-                  title: 'المجموعة 2: المستكشفون',
+                  title: ' المستكشفون',
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ExplorersScreen()),
+                    MaterialPageRoute(builder: (_) => const ExplorersScreen()),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 60),
                 _buildGroupCard(
                   context,
                   gradientColors: [
                     Colors.red.shade300,
                     Colors.red.shade500,
                   ],
-                  title: 'المجموعة 3: المبدعون',
+                  title: ' المبدعون',
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => CreatorsScreen()),
+                    MaterialPageRoute(builder: (_) => const CreatorsScreen()),
                   ),
                 ),
               ],
@@ -162,13 +207,13 @@ class HomeContent extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: gradientColors,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
             ),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
-                blurRadius: 10,
+                blurRadius: 5,
                 offset: Offset(0, 10),
               ),
             ],
@@ -187,7 +232,14 @@ class HomeContent extends StatelessWidget {
                 style: const TextStyle(
                     fontSize: 22,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    shadows: [
+                      Shadow(
+                        color: Colors.black12,
+                        blurRadius: 5,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                    fontWeight: FontWeight.w900),
               ),
             ],
           ),
