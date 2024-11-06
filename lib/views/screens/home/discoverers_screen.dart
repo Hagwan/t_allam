@@ -98,7 +98,7 @@ class DiscoverersScreen extends StatelessWidget {
                       // Navigate to the letters page
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const LettersPage(),
+                          builder: (_) => const letterPage(),
                         ),
                       );
                     },

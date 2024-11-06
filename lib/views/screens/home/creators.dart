@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'stories.dart';
 
 class CreatorsScreen extends StatelessWidget {
   const CreatorsScreen({super.key});
@@ -88,15 +89,15 @@ class CreatorsScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   _buildSectionCard(
                     context,
-                    title: 'الحروف',
+                    title: 'القصص السحرية ',
                     backgroundColor: const Color(0xFFFF6667),
                     imagePath:
-                        'lib/assets/images/aphapets.png', // Replace with the actual image path
+                        'lib/assets/images/stories.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the letters page
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const LettersPage(),
+                          builder: (_) => const StoriesPage(),
                         ),
                       );
                     },
@@ -104,10 +105,10 @@ class CreatorsScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildSectionCard(
                     context,
-                    title: 'التشكيل',
+                    title: 'قصة الحيوانات',
                     backgroundColor: const Color(0xFFFF6667),
                     imagePath:
-                        'lib/assets/images/tashkeel.png', // Replace with the actual image path
+                        'lib/assets/images/animals.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the formation page
                       Navigator.of(context).push(
@@ -175,21 +176,6 @@ class CreatorsScreen extends StatelessWidget {
 }
 
 // Placeholder page for LettersPage
-class LettersPage extends StatelessWidget {
-  const LettersPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Letters'),
-      ),
-      body: const Center(
-        child: Text('Content for Letters Page'),
-      ),
-    );
-  }
-}
 
 // Placeholder page for FormationPage
 class FormationPage extends StatelessWidget {

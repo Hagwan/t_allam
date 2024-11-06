@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'family.dart';
+import 'fruits.dart';
+import 'animals.dart';
 
 class ExplorersScreen extends StatelessWidget {
   const ExplorersScreen({super.key});
@@ -7,7 +10,7 @@ class ExplorersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF31AEFF),
+        backgroundColor: const Color(0xFF31AEFF),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -18,7 +21,7 @@ class ExplorersScreen extends StatelessWidget {
         children: [
           // Top section with character and welcome message
           Container(
-            color: Color(0xFF31AEFF),
+            color: const Color(0xFF31AEFF),
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: const Row(
               children: [
@@ -88,15 +91,15 @@ class ExplorersScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   _buildSectionCard(
                     context,
-                    title: 'الحروف',
-                    backgroundColor: Color(0xFF31AEFF),
+                    title: 'العائلة',
+                    backgroundColor: const Color(0xFF31AEFF),
                     imagePath:
                         'lib/assets/images/family.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the letters page
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const LettersPage(),
+                          builder: (_) => const FamilyPage(),
                         ),
                       );
                     },
@@ -104,15 +107,15 @@ class ExplorersScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildSectionCard(
                     context,
-                    title: 'التشكيل',
-                    backgroundColor: Color(0xFF31AEFF),
+                    title: 'الفواكه',
+                    backgroundColor: const Color(0xFF31AEFF),
                     imagePath:
                         'lib/assets/images/fruits.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the formation page
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const FormationPage(),
+                          builder: (_) => const FruitsPage(),
                         ),
                       );
                     },
@@ -120,15 +123,15 @@ class ExplorersScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildSectionCard(
                     context,
-                    title: 'التشكيل',
-                    backgroundColor: Color(0xFF31AEFF),
+                    title: 'الحيوانات',
+                    backgroundColor: const Color(0xFF31AEFF),
                     imagePath:
                         'lib/assets/images/animals.png', // Replace with the actual image path
                     onTap: () {
                       // Navigate to the formation page
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const FormationPage(),
+                          builder: (_) => const AnimalsPage(),
                         ),
                       );
                     },

@@ -55,9 +55,10 @@ Replace '\\''[Letter]'\\'' with the specified Arabic letter
 where [Letter] is replaced by a new Arabic letter each time. <</SYS>>
 next [/INST]""",
       "parameters": {
-       "decoding_method": "sample",
-        "temperature": 0.8, // Adjusts randomness; higher values increase variation
-        "top_k": 50,       // Limits selection to the top-k likely choices
+        "decoding_method": "sample",
+        "temperature":
+            0.8, // Adjusts randomness; higher values increase variation
+        "top_k": 50, // Limits selection to the top-k likely choices
         "max_new_tokens": 50,
         "stop_sequences": ["\n"],
         "repetition_penalty": 1.2
