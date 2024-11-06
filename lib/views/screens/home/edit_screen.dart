@@ -8,50 +8,59 @@ class EditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            // Character Image
-            Image.asset(
-              'lib/assets/images/Allam.png', // replace with the actual image asset path
-              width: 130,
-            ),
-            const SizedBox(height: 40),
-            // Object Detection and Image Generation Buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildFeatureButton(
-                    icon: Icons.data_object,
-                    label: ' ارسم الاشياء',
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DrawObject(),
-                      )); // I
-                    },
-                  ),
-                  _buildFeatureButton(
-                    icon: Icons.draw_rounded,
-                    label: 'اكتب الحروف ',
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DrawAlphabet(),
-                      )); // Image Generation action
-                    },
-                  ),
-                ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            children: [
+              const SizedBox(height: 30),
+              // Character Image
+              Image.asset(
+                'lib/assets/images/Allam.png', // replace with the actual image asset path
+                width: 130,
               ),
-            ),
-            const SizedBox(height: 30),
-            // Chat with LughatiGPT Button
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32.0),
-            ),
-          ],
+              const SizedBox(height: 40),
+              // Object Detection and Image Generation Buttons
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildFeatureButton(
+                      icon: Icons.data_object,
+                      label: ' ارسم الاشياء',
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DrawObject(),
+                        ));
+                      },
+                    ),
+                    const SizedBox(width: 20),
+                    _buildFeatureButton(
+                      icon: Icons.draw_rounded,
+                      label: 'اكتب الحروف ',
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DrawAlphabet(),
+                        ));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              // Chat with LughatiGPT Button
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.0),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -8,91 +8,98 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-
-            // Character Image
-            Image.asset(
-              'lib/assets/images/Allam.png', // replace with the actual image asset path
-              width: 130,
-            ),
-            const SizedBox(height: 40),
-            // Object Detection and Image Generation Buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildFeatureButton(
-                    icon: Icons.camera_alt_rounded,
-                    label: 'كاشف الأجسام',
-                    gradientColors: [
-                      const Color(0xFFBE9AFF), // Purple color
-                      const Color(0xFF8C68CD),
-                    ],
-                    onTap: () {},
-                  ),
-                  const SizedBox(width: 20),
-                  _buildFeatureButton(
-                    icon: Icons.add_photo_alternate_rounded,
-                    label: 'إنشاء الصور',
-                    gradientColors: [
-                      const Color(0xFFBE9AFF), // Purple color
-                      const Color(0xFF8C68CD),
-                    ],
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ImageGenerator(),
-                      ));
-                    },
-                  ),
-                ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            children: [
+              const SizedBox(height: 30),
+              // Character Image
+              Image.asset(
+                'lib/assets/images/Allam.png', // replace with the actual image asset path
+                width: 130,
               ),
-            ),
-            const SizedBox(height: 30),
-            // Chat with LughatiGPT Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ChatScreen(),
-                  ));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFBE9AFF), // Purple color
-                        Color(0xFF8C68CD),
+              const SizedBox(height: 40),
+              // Object Detection and Image Generation Buttons
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildFeatureButton(
+                      icon: Icons.camera_alt_rounded,
+                      label: 'كاشف الأجسام',
+                      gradientColors: [
+                        const Color(0xFFBE9AFF), // Purple color
+                        const Color(0xFF8C68CD),
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      onTap: () {},
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 60,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'تحدث مع لغتي جي بي تي',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.chat, color: Colors.white),
+                    const SizedBox(width: 20),
+                    _buildFeatureButton(
+                      icon: Icons.add_photo_alternate_rounded,
+                      label: 'إنشاء الصور',
+                      gradientColors: [
+                        const Color(0xFFBE9AFF), // Purple color
+                        const Color(0xFF8C68CD),
                       ],
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ImageGenerator(),
+                        ));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              // Chat with LughatiGPT Button
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ChatScreen(),
+                    ));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFBE9AFF), // Purple color
+                          Color(0xFF8C68CD),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 60,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'تحدث مع لغتي جي بي تي',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(Icons.chat, color: Colors.white),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

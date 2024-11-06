@@ -14,13 +14,10 @@ class _ImageGeneratorState extends State<ImageGenerator> {
   String _status = '';
 
   Future<bool> isPromptSafeForKids(String prompt) async {
-    // Implement your logic to check if the prompt is safe for kids
-    // For now, let's assume all prompts are safe
-    return true;
+    return true; // Replace with actual safety check logic if needed
   }
 
   Future<String> translateToEnglish(String arabicText) async {
-    // Use the Hugging Face translation API to translate Arabic to English
     const apiUrl =
         "https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-ar-en";
     const apiKey =
@@ -52,8 +49,7 @@ class _ImageGeneratorState extends State<ImageGenerator> {
     bool isSafe = await isPromptSafeForKids(prompt);
     if (!isSafe) {
       setState(() {
-        _status =
-            'هذا النص غير مناسب لك. الرجاء تجربة نص آخر!';
+        _status = 'هذا النص غير مناسب لك. الرجاء تجربة نص آخر!';
       });
       return;
     }
@@ -63,14 +59,12 @@ class _ImageGeneratorState extends State<ImageGenerator> {
     });
 
     try {
-      // Translate the prompt from Arabic to English
       String translatedPrompt = await translateToEnglish(prompt);
 
       setState(() {
         _status = 'Generating image...';
       });
 
-      // Call image generation API with the translated prompt
       final result = await generateImageFromPrompt(translatedPrompt);
       setState(() {
         if (result['status'] == 'success') {
@@ -100,99 +94,98 @@ class _ImageGeneratorState extends State<ImageGenerator> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Display the character image at the top
-              Image.asset(
-                'lib/assets/images/Half_Allam.png', // replace with the actual image asset path
-                height: 150,
-              ),
-              // Display the generated image or placeholder
-              Container(
-                height: 300,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(16),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 30),
+                Image.asset(
+                  'lib/assets/images/Half_Allam.png',
+                  height: 150,
                 ),
-                child: _imageUrl != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.memory(
-                          base64Decode(_imageUrl!.split(',')[1]),
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Center(
-                        child: Icon(
-                          Icons.image,
-                          color: Colors.grey.shade400,
-                          size: 80,
-                        ),
-                      ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Text field for prompt input
-              TextField(
-                textDirection: TextDirection.rtl,
-                controller: _controller,
-                decoration: InputDecoration(
-                  hintTextDirection: TextDirection.rtl,
-                  hintText: ' اكتب النص هنا...',
-                  filled: true,
-                  fillColor: Colors.grey.shade200,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
+                const SizedBox(height: 20),
+                Container(
+                  height: 300,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  child: _imageUrl != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.memory(
+                            base64Decode(_imageUrl!.split(',')[1]),
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Center(
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.grey.shade400,
+                            size: 80,
+                          ),
+                        ),
                 ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Button to generate image
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 39, 92, 176),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                const SizedBox(height: 20),
+                TextField(
+                  textDirection: TextDirection.rtl,
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintTextDirection: TextDirection.rtl,
+                    hintText: ' اكتب النص هنا...',
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 15),
                   ),
                 ),
-                label:
-                    const Text('ابدأ', style: TextStyle(color: Colors.white)),
-                icon: const Icon(Icons.switch_access_shortcut_rounded,
-                    color: Colors.white),
-                onPressed: () {
-                  final prompt = _controller.text;
-                  if (prompt.isNotEmpty) {
-                    _generateImage(prompt);
-                  } else {
-                    setState(() {
-                      _status = 'Please enter a prompt.';
-                    });
-                  }
-                },
-              ),
-
-              const SizedBox(height: 20),
-
-              // Status message
-              if (_status.isNotEmpty)
-                Text(
-                  _status,
-                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 39, 92, 176),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 25),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  label:
+                      const Text('ابدأ', style: TextStyle(color: Colors.white)),
+                  icon: const Icon(Icons.switch_access_shortcut_rounded,
+                      color: Colors.white),
+                  onPressed: () {
+                    final prompt = _controller.text;
+                    if (prompt.isNotEmpty) {
+                      _generateImage(prompt);
+                    } else {
+                      setState(() {
+                        _status = 'Please enter a prompt.';
+                      });
+                    }
+                  },
                 ),
-            ],
+                const SizedBox(height: 20),
+                if (_status.isNotEmpty)
+                  Text(
+                    _status,
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

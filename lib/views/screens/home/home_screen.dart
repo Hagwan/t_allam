@@ -37,8 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 0,
         leading: const Padding(
-          padding: EdgeInsets.only(
-              left: 8.0), // Add padding to move the icon to the right
+          padding: EdgeInsets.only(left: 8.0),
           child: MyIcon(
             name: "allam_icon",
             size: 10,
@@ -52,11 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.person_pin_rounded, color: Colors.white),
             onPressed: () {
-              // Navigate to Profile Page or handle profile action
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const FamilyScreen()),
               );
-              // take the user to the profile page
             },
           ),
         ],
@@ -66,16 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: <Color>[
-                Color(0xFFBE9AFF), // Purple color
-                Color(0xFF8C68CD), // Light purple color
+                Color(0xFFBE9AFF),
+                Color(0xFF8C68CD),
               ],
             ),
           ),
         ),
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: IndexedStack(
+          index: _selectedIndex,
+          children: _screens,
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.grey.shade200,
