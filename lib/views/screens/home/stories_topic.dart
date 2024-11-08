@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'stories.dart';
+import 'stories_page.dart';
 
-class CreatorsScreen extends StatelessWidget {
-  const CreatorsScreen({super.key});
+class StoriesTopicScreen extends StatelessWidget {
+  const StoriesTopicScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class CreatorsScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'اكمل المراحل،  لتكسب المزيد  من النقاط',
+                        'اختر القصة التي تريد الاستماع إليها',
                         style: TextStyle(color: Colors.white, fontSize: 14),
                       ),
                     ],
@@ -78,7 +78,7 @@ class CreatorsScreen extends StatelessWidget {
                       thickness: 4,
                       color: Colors.grey),
                   Text(
-                    'المرحلة الثالثة',
+                    'القصص السحرية',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -96,14 +96,15 @@ class CreatorsScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     _buildSectionCard(
                       context,
-                      title: 'القصص  ',
+                      title: 'القصة السحرية  ',
                       backgroundColor: const Color(0xFFFF6667),
                       imagePath:
                           'lib/assets/images/stories.png', // Replace with the actual image path
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => const StoriesPage(),
+                            builder: (_) =>
+                                StoriesScreen(title: 'القصة السحرية'),
                           ),
                         );
                       },
@@ -111,14 +112,46 @@ class CreatorsScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     _buildSectionCard(
                       context,
-                      title: 'الأشياء',
+                      title: 'قصة مملكة الحيوانات',
                       backgroundColor: const Color(0xFFFF6667),
                       imagePath:
-                          'lib/assets/images/things.png', // Replace with the actual image path
+                          'lib/assets/images/animals.png', // Replace with the actual image path
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => const FormationPage(),
+                            builder: (_) =>
+                                StoriesScreen(title: 'قصة مملكة الحيوانات '),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    _buildSectionCard(
+                      context,
+                      title: 'قصة الأبطال',
+                      backgroundColor: const Color(0xFFFF6667),
+                      imagePath:
+                          'lib/assets/images/animals.png', // Replace with the actual image path
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => StoriesScreen(title: 'قصة الأبطال'),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    _buildSectionCard(
+                      context,
+                      title: 'قصة الأميرات',
+                      backgroundColor: const Color(0xFFFF6667),
+                      imagePath:
+                          'lib/assets/images/animals.png', // Replace with the actual image path
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                StoriesScreen(title: 'قصة الأميرات'),
                           ),
                         );
                       },

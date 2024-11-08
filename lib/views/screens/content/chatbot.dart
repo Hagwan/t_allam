@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -30,65 +29,22 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<String> getChatbotResponse(String message) async {
-    final apiKey = dotenv.env['API_KEY']!;
-    final url =
-        "https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29";
-    final token = await getIbMToken(apiKey);
-
-    final body = {
-      "input": """<s> [INST]
-$message
-
-<<SYS>>
-أجب فقط من هذا الكتاب، وهو من منهج اللغة العربية في السعودية للصف الرابع، الفصل الأول، بلغة مناسبة لعمر 10 سنوات.
-تصرّف كمعلم للغة العربية.
-<</SYS>>""",
-      "parameters": {
-        "decoding_method": "greedy",
-        "max_new_tokens": 900,
-        "repetition_penalty": 1
-      },
-      "model_id": "sdaia/allam-1-13b-instruct",
-      "project_id": "10ee99ea-e10e-49f6-8126-1ac689449710"
-    };
-
+    final url = Uri.parse('http://10.10.27.113:8547/chatbot/');
     final headers = {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token",
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     };
 
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: json.encode(body),
-    );
+    final body = json.encode({'query': message});
+
+    final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
+      // Decode the response with utf8 to handle Arabic characters
       final data = json.decode(utf8.decode(response.bodyBytes));
-      return data['results'][0]['generated_text'];
+      return data['response'];
     } else {
-      throw Exception('Failed to get response: ${response.body}');
-    }
-  }
-
-  Future<String> getIbMToken(String apiKey) async {
-    final tokenUrl = 'https://iam.cloud.ibm.com/identity/token';
-
-    final response = await http.post(
-      Uri.parse(tokenUrl),
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: {
-        'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
-        'apikey': apiKey,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final resFormat = json.decode(response.body);
-      return resFormat['access_token'];
-    } else {
-      throw Exception('Error: ${response.statusCode}\n${response.body}');
+      throw Exception('Failed to fetch response from chatbot');
     }
   }
 
@@ -97,7 +53,8 @@ $message
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("لغتي جي بي تي", style: TextStyle(color: Colors.black)),
+        title:
+            const Text("لغتي جي بي تي", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
@@ -122,8 +79,9 @@ $message
                     bool isUser = message['role'] == 'user';
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment:
-                          isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+                      mainAxisAlignment: isUser
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
                       children: [
                         if (!isUser) ...[
                           const CircleAvatar(
