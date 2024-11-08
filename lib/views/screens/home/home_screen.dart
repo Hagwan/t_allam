@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:t_allam/views/screens/home/parentalprofile.dart';
 import 'edit_screen.dart';
-import 'family_screen.dart';
+import 'kid_profile.dart';
 import 'search_screen.dart';
 import '../content/stt_screen.dart';
 import 'discoverers_screen.dart'; // Import the DiscoverersScreen
@@ -22,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeContent(), // Default Home screen content
     const SearchScreen(),
     const EditScreen(),
-    const FamilyScreen(),
+    const KidProfile(),
+    const ParentalProfile(),
   ];
 
   void _onItemTapped(int index) {
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.person_pin_rounded, color: Colors.white),
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const FamilyScreen()),
+                MaterialPageRoute(builder: (context) => const KidProfile()),
               );
             },
           ),
@@ -174,7 +176,7 @@ class HomeContent extends StatelessWidget {
                     Colors.blue.shade300,
                     Colors.blue.shade500,
                   ],
-                  title: ' المستكشفون',
+                  title: ' المغامرون',
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const ExplorersScreen()),
                   ),

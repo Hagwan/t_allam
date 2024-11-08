@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'family.dart';
 import 'fruits.dart';
 import 'animals.dart';
+import 'veg.dart';
 
 class ExplorersScreen extends StatelessWidget {
   const ExplorersScreen({super.key});
@@ -136,6 +137,21 @@ class ExplorersScreen extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => const AnimalsPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    _buildSectionCard(
+                      context,
+                      title: 'الخضراوات',
+                      backgroundColor: const Color(0xFF31AEFF),
+                      imagePath:
+                          'lib/assets/images/fruits.png', // Replace with the actual image path
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const VegPage(),
                           ),
                         );
                       },

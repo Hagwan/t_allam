@@ -168,7 +168,7 @@ class _DrawAlphabetState extends State<DrawAlphabet> {
             child: ImagePainter.asset(
               "lib/assets/images/Rectangle.png",
               controller: _controller,
-              scalable: true,
+              scalable: false,
               textDelegate: TextDelegate(),
             ),
           ),

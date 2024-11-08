@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:t_allam/views/screens/home/family_page.dart'; // Screen 1: Intro to Letters
-import 'fruitsDetails.dart';
+import 'veg_details.dart';
 
-class FruitsPage extends StatelessWidget {
-  const FruitsPage({super.key});
+class VegPage extends StatelessWidget {
+  const VegPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,7 @@ class FruitsPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FruitsScreen()),
+                      MaterialPageRoute(builder: (context) => VegScreen()),
                     );
                   },
                 ),
@@ -93,8 +92,8 @@ class FruitsPage extends StatelessWidget {
   }
 }
 
-class FruitsScreen extends StatelessWidget {
-  const FruitsScreen({super.key});
+class VegScreen extends StatelessWidget {
+  const VegScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +164,7 @@ class FruitsScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => FruitsDeatilsScreen(
+              builder: (context) => VegDeatilsScreen(
                     groupName: groupName,
                     letters: letters,
                   )),
