@@ -28,7 +28,6 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _loadPreferences(); // Load values on initialization
-    _fetchCharacterData(); // Fetch character data from Firestore
   }
 
   void _loadPreferences() async {
@@ -49,19 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  void _fetchCharacterData() async {
-    final doc = await _firestore.collection('users').doc('character').get();
-    if (doc.exists) {
-      final character = doc.data()?['character'];
-      setState(() {
-        if (character == 'Alam') {
-          characterImage = 'lib/assets/images/Allam.png';
-        } else if (character == 'Ula') {
-          characterImage = 'lib/assets/images/Ula.png';
-        }
-      });
-    }
-  }
+ 
 
   @override
   Widget build(BuildContext context) {

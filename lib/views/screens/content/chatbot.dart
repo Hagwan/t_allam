@@ -29,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<String> getChatbotResponse(String message) async {
-    final url = Uri.parse('http://192.168.8.48:8547/chatbot/');
+    final url = Uri.parse('http://192.168.168.44:8547/chatbot/');
     final headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
