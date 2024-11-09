@@ -4,7 +4,7 @@ import 'edit_screen.dart';
 import 'kid_profile.dart';
 import 'search_screen.dart';
 import '../content/stt_screen.dart';
-import 'discoverers_screen.dart'; // Import the DiscoverersScreen
+import 'discoverers_screen.dart';
 import 'Explorers.dart';
 import 'Creators.dart';
 import 'package:t_allam/models/icons.dart';
@@ -156,39 +156,39 @@ class HomeContent extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                const SizedBox(height: 60),
+                const SizedBox(height: 20),
                 _buildGroupCard(
                   context,
                   gradientColors: [
                     const Color(0xFFFFDA7E),
                     const Color(0xFFFFCC4D),
                   ],
-                  title: ' المكتشفون',
+                  imagePath: 'lib/assets/images/discoverers.png',
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (_) => const DiscoverersScreen()),
                   ),
                 ),
-                const SizedBox(height: 60),
+                const SizedBox(height: 20),
                 _buildGroupCard(
                   context,
                   gradientColors: [
                     Colors.blue.shade300,
                     Colors.blue.shade500,
                   ],
-                  title: ' المغامرون',
+                  imagePath: 'lib/assets/images/explorers.png',
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const ExplorersScreen()),
                   ),
                 ),
-                const SizedBox(height: 60),
+                const SizedBox(height: 20),
                 _buildGroupCard(
                   context,
                   gradientColors: [
                     Colors.red.shade300,
                     Colors.red.shade500,
                   ],
-                  title: ' المبدعون',
+                  imagePath: 'lib/assets/images/creators.png',
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const CreatorsScreen()),
                   ),
@@ -203,14 +203,15 @@ class HomeContent extends StatelessWidget {
 
   Widget _buildGroupCard(BuildContext context,
       {required List<Color> gradientColors,
-      required String title,
+      required String imagePath,
       VoidCallback? onTap}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: 100,
+          height: 150,
+          width: 40, // Increased height for a larger image
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: gradientColors,
@@ -221,34 +222,20 @@ class HomeContent extends StatelessWidget {
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 5,
-                offset: Offset(0, 10),
+                offset: Offset(0, 15),
               ),
             ],
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(25.0),
-                child: Icon(Icons.menu_book_rounded,
-                    color: Colors.white, size: 30),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Image.asset(
+                imagePath,
+                width: 230, // Increased width for larger image display
+                height: 230, // Increased height for larger image display
               ),
-              Text(
-                title,
-                style: const TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black12,
-                        blurRadius: 5,
-                        offset: Offset(0, 5),
-                      ),
-                    ],
-                    fontWeight: FontWeight.w900),
-              ),
-            ],
+            ),
           ),
         ),
       ),

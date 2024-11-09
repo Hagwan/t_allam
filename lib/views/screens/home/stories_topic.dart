@@ -131,7 +131,7 @@ class StoriesTopicScreen extends StatelessWidget {
                       title: 'قصة الأبطال',
                       backgroundColor: const Color(0xFFFF6667),
                       imagePath:
-                          'lib/assets/images/animals.png', // Replace with the actual image path
+                          'lib/assets/images/heros.png', // Replace with the actual image path
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -146,7 +146,7 @@ class StoriesTopicScreen extends StatelessWidget {
                       title: 'قصة الأميرات',
                       backgroundColor: const Color(0xFFFF6667),
                       imagePath:
-                          'lib/assets/images/animals.png', // Replace with the actual image path
+                          'lib/assets/images/princes.png', // Replace with the actual image path
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(

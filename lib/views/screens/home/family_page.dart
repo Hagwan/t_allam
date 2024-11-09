@@ -166,16 +166,30 @@ class _FamilyLessonPageState extends State<FamilyLessonPage> {
                     Column(
                       children: [
                         _buildSpeechButton(
-                            'أبي', 'Father with Sons in home', 'أبي'),
-                        _buildSpeechButton('أمي', 'Mother ', 'أمي'),
-                        _buildSpeechButton('أختي', 'Sister', 'أختي'),
+                            'أبي',
+                            'Generate a 2D animated illustration of a cheerful father in a modest outfit, playing with his child outdoors in a park. The father is helping the child fly a kite in a sunny, safe environment with trees and a clear sky, making it engaging and fun for children.',
+                            'أبي'),
+                        _buildSpeechButton(
+                            'أمي',
+                            'Create a 2D animated image of a kind and loving mother wearing a modest dress and a headscarf, sitting with her child, reading a book together. The setting is a cozy room with warm colors and playful decor suitable for children. ',
+                            'أمي'),
+                        _buildSpeechButton(
+                            'أختي',
+                            'Illustrate a 2D animated scene showing a young girl and her little sibling playing together with building blocks in a colorful playroom. Both children are dressed in modest clothing, and the scene is friendly and cheerful, with toys and bright colors to appeal to young viewers.',
+                            'أختي'),
                       ],
                     ),
                     Column(
                       children: [
-                        _buildSpeechButton('أخي', 'Brother', 'أخي'),
-                        _buildSpeechButton('جدي', 'Grandfather', 'جدي'),
-                        _buildSpeechButton('جدتي', 'Grandmother', 'جدتي'),
+                        _buildSpeechButton(
+                            'أخي',
+                            'Create a 2D animated image of an older brother and his younger sibling riding bicycles together in a safe neighborhood. The scene includes trees, a clear path, and friendly surroundings. Both children wear modest clothing and are smiling, making it fun and suitable for children.',
+                            'أخي'),
+                        _buildSpeechButton(
+                            'جدي',
+                            'Generate a 2D animated illustration of a grandfather with a warm smile, sitting on a park bench with his grandchild. The grandfather is telling a story, and the child is listening intently. The environment is serene, with trees, birds, and a peaceful atmosphere.',
+                            'جدي'),
+                        _buildSpeechButton('جدتي', 'Illustrate a 2D animated scene of a grandmother baking cookies with her grandchild in a cozy kitchen. The grandmother wears a modest dress and headscarf, and both are smiling, enjoying the activity together. The kitchen has soft colors and is decorated with child-friendly items.', 'جدتي'),
                       ],
                     ),
                   ],

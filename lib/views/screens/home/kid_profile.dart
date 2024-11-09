@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'parentalprofile.dart';
+import '../auth/login_screen.dart'; // Import the login screen
 
 class KidProfile extends StatefulWidget {
   const KidProfile({super.key});
@@ -11,6 +13,14 @@ class KidProfile extends StatefulWidget {
 class _KidProfileState extends State<KidProfile> {
   final List<Color> colors = [const Color(0xFFBE9AFF), const Color(0xFF8C68CD)];
   bool isToggled = false;
+
+  void _logOut() async {
+    await FirebaseAuth.instance.signOut();
+    // Navigate to the login page
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) =>  LoginScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +63,13 @@ class _KidProfileState extends State<KidProfile> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                onPressed: _logOut,
+                tooltip: 'Log out',
+              ),
               Column(
                 children: [
                   Switch(

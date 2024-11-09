@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'kid_profile.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class ParentalProfile extends StatefulWidget {
   const ParentalProfile({Key? key}) : super(key: key);
 
@@ -9,8 +8,33 @@ class ParentalProfile extends StatefulWidget {
 }
 
 class _ParentalProfileState extends State<ParentalProfile> {
+  final _prefs = SharedPreferences.getInstance();
   final List<Color> colors = [const Color(0xFFBE9AFF), const Color(0xFF8C68CD)];
   bool isToggled = true;
+@override
+  void initState() {
+    super.initState();
+    _loadPreferences(); // Load values on initialization
+  }
+
+  void _loadPreferences() async {
+    final prefs = await _prefs;
+    isLughatiGPTEnabled = prefs.getBool('isLughatiGPTEnabled') ?? true;
+    isObjectDetectionEnabled = prefs.getBool('isObjectDetectionEnabled') ?? true;
+    isImageGenerationEnabled = prefs.getBool('isImageGenerationEnabled') ?? true;
+  }
+
+  void _savePreferences() async {
+    final prefs = await _prefs;
+    await prefs.setBool('isLughatiGPTEnabled', isLughatiGPTEnabled);
+    await prefs.setBool('isObjectDetectionEnabled', isObjectDetectionEnabled);
+    await prefs.setBool('isImageGenerationEnabled', isImageGenerationEnabled);
+  }
+
+  // Control state variables
+  bool isLughatiGPTEnabled = true;
+  bool isObjectDetectionEnabled = true;
+  bool isImageGenerationEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -140,18 +164,36 @@ class _ParentalProfileState extends State<ParentalProfile> {
       children: [
         const Text('Controls', style: TextStyle(color: Colors.grey)),
         const SizedBox(height: 8),
-        _toggleControl('Lughati GPT'),
+        _toggleControlSwitch('Lughati GPT', isLughatiGPTEnabled, (value) {
+          setState(() {
+            isLughatiGPTEnabled = value;
+          });
+        }),
         const SizedBox(height: 8),
-        _toggleControl('Object Detection'),
+        _toggleControlSwitch('Object Detection', isObjectDetectionEnabled,
+            (value) {
+          setState(() {
+            isObjectDetectionEnabled = value;
+          });
+        }),
         const SizedBox(height: 8),
-        _toggleControl('Image Generation'),
+        _toggleControlSwitch('Image Generation', isImageGenerationEnabled,
+            (value) {
+          setState(() {
+            isImageGenerationEnabled = value;
+          });
+        }),
       ],
     );
   }
 
-  Widget _toggleControl(String title) {
+  Widget _toggleControlSwitch(
+      String title, bool isEnabled, Function(bool) onChanged) {
     return _gradientContainer(
-      height: 60,
+      height: 70,
+      colors: isEnabled
+          ? colors
+          : [Colors.purple.shade600, const Color.fromARGB(255, 248, 25, 25)],
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -161,9 +203,10 @@ class _ParentalProfileState extends State<ParentalProfile> {
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Switch(
-            value: true,
-            onChanged: (bool value) {},
+            value: isEnabled,
+            onChanged: onChanged,
             activeColor: Colors.white,
+            inactiveThumbColor: Colors.red,
           ),
         ],
       ),

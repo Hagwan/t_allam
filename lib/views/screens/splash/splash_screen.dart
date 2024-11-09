@@ -22,9 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
 
-    await Future.delayed(const Duration(seconds: 2));  // Splash delay
+    await Future.delayed(const Duration(seconds: 2)); // Splash delay
 
-    if (!mounted) return;  // Ensure widget is still mounted
+    if (!mounted) return; // Ensure widget is still mounted
 
     // Navigate based on onboarding status
     if (hasSeenOnboarding) {
@@ -41,8 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF6200EA),
-      body: Center(child: Image.asset('lib/assets/images/logo.png', width: 400)),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: Center(
+          child: Image.asset('lib/assets/images/tallam2.png', width: 250)),
     );
   }
 }

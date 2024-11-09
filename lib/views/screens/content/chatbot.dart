@@ -29,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<String> getChatbotResponse(String message) async {
-    final url = Uri.parse('http://10.10.27.113:8547/chatbot/');
+    final url = Uri.parse('http://192.168.8.48:8547/chatbot/');
     final headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           const CircleAvatar(
                             radius: 20,
                             backgroundImage: AssetImage(
-                                'lib/assets/icons/Allam_chat.png'), // Replace with actual path
+                                'lib/assets/images/chatbot.png'), // Replace with actual path
                           ),
                           const SizedBox(width: 8),
                         ],

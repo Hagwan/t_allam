@@ -111,7 +111,7 @@ class CreatorsScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     _buildSectionCard(
                       context,
-                      title: 'الأشياء',
+                      title: 'قصص قبل النوم',
                       backgroundColor: const Color(0xFFFF6667),
                       imagePath:
                           'lib/assets/images/things.png', // Replace with the actual image path

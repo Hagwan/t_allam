@@ -44,7 +44,7 @@ class EditScreen extends StatelessWidget {
                     const SizedBox(width: 20),
                     _buildFeatureButton(
                       icon: Icons.draw_rounded,
-                      label: 'اكتب الحروف ',
+                      label: 'ارسم الحرف ',
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const DrawAlphabet(),
